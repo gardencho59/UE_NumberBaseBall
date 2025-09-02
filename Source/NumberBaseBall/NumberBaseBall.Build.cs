@@ -19,5 +19,7 @@ public class NumberBaseBall : ModuleRules
 		// PrivateDependencyModuleNames.Add("OnlineSubsystem");
 
 		// To include OnlineSubsystemSteam, add it to the plugins section in your uproject file with the Enabled attribute set to true
+		
+		PublicIncludePaths.AddRange(new string[] {"NumberBaseBall"});
 	}
 }
