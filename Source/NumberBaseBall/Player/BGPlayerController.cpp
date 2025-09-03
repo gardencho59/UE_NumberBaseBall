@@ -22,6 +22,11 @@ ABGPlayerController::ABGPlayerController()
 void ABGPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
+
+	if (IsLocalController() == false)
+	{
+		return;
+	}
 	
 	FInputModeUIOnly InputModeUIOnly;
 	SetInputMode(InputModeUIOnly);
@@ -52,22 +57,22 @@ void ABGPlayerController::SetChatMessageString(const FString& InChatMessageStrin
 
 	if (IsLocalController() == true)
 		{
-			// ABGPlayerState* BGPS = GetPlayerState<ABGPlayerState>();
-			//
-			// if (IsValid(BGPS) == true)
-			// {
-			// 	FString CombinedMessageString = BGPS->GetPlayerInfoString() + TEXT(": ") + InChatMessageString;
-			//
-			//	ServerRPCPrintChatMessageString(CombinedMessageString);
-			// }
-			ServerRPCPrintChatMessageString(ChatMessageString);
+			 // ABGPlayerState* BGPS = GetPlayerState<ABGPlayerState>();
+			 //
+			 // if (IsValid(BGPS) == true)
+			 // {
+			 // 	FString CombinedMessageString = BGPS->GetPlayerInfoString() + TEXT(": ") + InChatMessageString;
+			 //
+				// ServerRPCPrintChatMessageString(CombinedMessageString);
+			 // }
+			ServerRPCPrintChatMessageString(InChatMessageString);
 		}
 }
 
 
 void ABGPlayerController::PrintChatMessageString(const FString& InChatMessageString)
 {
-	UKismetSystemLibrary::PrintString(this, ChatMessageString, true, true, FLinearColor::Red, 5.0f);
+	UKismetSystemLibrary::PrintString(this, InChatMessageString, true, true, FLinearColor::Red, 5.0f);
 }
 
 
