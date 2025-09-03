@@ -4,27 +4,28 @@
 #include "Player/BGPlayerController.h"
 
 //#include "UI/BGChatInput.h"
-//#include "EngineUtils.h"
-//#include "Kismet/GameplayStatics.h"
-//#include "Game/BGGameModeBase.h"
-//#include "BGPlayerState.h"
-//#include "BGPlayerState.h"
-//#include "Net/UnrealNetwork.h"
+#include "EngineUtils.h"
+#include "Kismet/GameplayStatics.h"
+#include "Game/BGGameModeBase.h"
+#include "BGPlayerState.h"
+#include "BGPlayerState.h"
+#include "Net/UnrealNetwork.h"
+#include "BGPlayerState.h"
 
-/*
+
 ABGPlayerController::ABGPlayerController()
 {
 	bReplicates = true;
 }
-*/
-/*
+
+
 void ABGPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 	
 	FInputModeUIOnly InputModeUIOnly;
 	SetInputMode(InputModeUIOnly);
-
+	/*
 	if (IsValid(ChatInputWidgetClass) == true)
 	{
 		ChatInputWidgetInstance = CreateWidget<UBGChatInput>(this, ChatInputWidgetClass);
@@ -41,39 +42,41 @@ void ABGPlayerController::BeginPlay()
 			NotificationTextWidgetInstance->AddToViewport();
 		}
 	}
+	*/
 }
-*/
-/*
+
+
 void ABGPlayerController::SetChatMessageString(const FString& InChatMessageString)
 {
 	ChatMessageString = InChatMessageString;
 
 	if (IsLocalController() == true)
 		{
-			ABGPlayerState* BGPS = GetPlayerState<ABGPlayerState>();
-			
-			if (IsValid(BGPS) == true)
-			{
-				FString CombinedMessageString = BGPS->GetPlayerInfoString() + TEXT(": ") + InChatMessageString;
-
-				ServerRPCPrintChatMessageString(CombinedMessageString);
-			}		
+			// ABGPlayerState* BGPS = GetPlayerState<ABGPlayerState>();
+			//
+			// if (IsValid(BGPS) == true)
+			// {
+			// 	FString CombinedMessageString = BGPS->GetPlayerInfoString() + TEXT(": ") + InChatMessageString;
+			//
+			// 	ServerRPCPrintChatMessageString(CombinedMessageString);
+			// }
+			ServerRPCPrintChatMessageString(ChatMessageString);
 		}
 }
-*/
-/*
+
+
 void ABGPlayerController::PrintChatMessageString(const FString& InChatMessageString)
 {
 	UKismetSystemLibrary::PrintString(this, ChatMessageString, true, true, FLinearColor::Red, 5.0f);
 }
-*/
-/*
+
+
 void ABGPlayerController::ClientRPCPrintChatMessageString_Implementation(const FString& InChatMessageString)
 {
 	PrintChatMessageString(InChatMessageString);
 }
- */
-/*
+
+
 void ABGPlayerController::ServerRPCPrintChatMessageString_Implementation(const FString& InChatMessageString)
 {
 AGameModeBase* GM = UGameplayStatics::GetGameMode(this);
@@ -86,12 +89,12 @@ AGameModeBase* GM = UGameplayStatics::GetGameMode(this);
 		}
 	}
 }
-*/
-/*
+
+
 void ABGPlayerController::GetLifetimeReplicatedProps(TArray<class FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(ThisClass, NotificationText);
 }
-*/
+

@@ -6,8 +6,8 @@
 #include "GameFramework/PlayerController.h"
 #include "BGPlayerController.generated.h"
 
-//class UBGChatInput;
-//class UUserWidget;
+class UBGChatInput;
+class UUserWidget;
 
 /**
  * 
@@ -17,38 +17,39 @@ class NUMBERBASEBALL_API ABGPlayerController : public APlayerController
 {
 	GENERATED_BODY()
 	
-//public:
-	//ABGPlayerController();
-	//virtual void BeginPlay() override;
+public:
+	ABGPlayerController();
+	virtual void BeginPlay() override;
 
-	//void SetChatMessageString(const FString& InChatMessageString);
+	void SetChatMessageString(const FString& InChatMessageString);
 
-	//void PrintChatMessageString(const FString& InChatMessageString);
+	void PrintChatMessageString(const FString& InChatMessageString);
 
-	//UFUNCTION(Client, Reliable)
-	//void ClientRPCPrintChatMessageString(const FString& InChatMessageString);
+	UFUNCTION(Client, Reliable)
+	void ClientRPCPrintChatMessageString(const FString& InChatMessageString);
 
-	//UFUNCTION(Server, Reliable)
-	//void ServerRPCPrintChatMessageString(const FString& InChatMessageString);
+	UFUNCTION(Server, Reliable)
+	void ServerRPCPrintChatMessageString(const FString& InChatMessageString);
 
-	//virtual void GetLifetimeReplicatedProps(TArray<class FLifetimeProperty>& OutLifetimeProps) const override;
+	virtual void GetLifetimeReplicatedProps(TArray<class FLifetimeProperty>& OutLifetimeProps) const override;
 	
-//protected:
+protected:
 	//UPROPERTY(EditDefaultsOnly)
 	//TSubclassOf<UBGChatInput> ChatInputWidgetClass;
 	
 	//UPROPERTY()
 	//TObjectPtr<UBGChatInputChatInput> ChatInputWidgetInstance;	
 
-	//FString ChatMessageString;
+	FString ChatMessageString;
 
-	//UPROPERTY(EditDefaultsOnly)
-	//TSubclassOf<UUserWidget> NotificationTextWidgetClass;
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<UUserWidget> NotificationTextWidgetClass;
 	
-	//UPROPERTY()
-	//TObjectPtr<UUserWidget> NotificationTextWidgetInstance;
-//public:
-	//UPROPERTY(Replicated, BlueprintReadOnly)
-	//FText NotificationText;
+	UPROPERTY()
+	TObjectPtr<UUserWidget> NotificationTextWidgetInstance;
+	
+public:
+	UPROPERTY(Replicated, BlueprintReadOnly)
+	FText NotificationText;
 	
 };
