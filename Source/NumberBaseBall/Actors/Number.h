@@ -23,4 +23,9 @@ protected:
 
 public:
 	virtual void Tick(float DeltaTime) override;
+
+	void SetNumber(TCHAR Character);
+
+	UPROPERTY(EditDefaultsOnly, Category="Number")
+	TArray<UStaticMesh*> NumberMeshes;
 };
