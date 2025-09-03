@@ -1,28 +1,28 @@
-#include "NumberManager.h"
-#include "Number.h"
+#include "BGNumberManager.h"
+#include "BGNumber.h"
 
-UNumberManager* UNumberManager::SingletonInstance = nullptr;
+UBGNumberManager* UBGNumberManager::SingletonInstance = nullptr;
 
-UNumberManager::UNumberManager()
+UBGNumberManager::UBGNumberManager()
 {
-	static ConstructorHelpers::FClassFinder<ANumber> NumberBPClass(TEXT("/Game/Actors/BP_Number"));
+	static ConstructorHelpers::FClassFinder<ABGNumber> NumberBPClass(TEXT("/Game/Actors/BP_Number"));
 	if (NumberBPClass.Succeeded())
 	{
 		NumberActorClass = NumberBPClass.Class;
 	}
 }
 
-UNumberManager* UNumberManager::Get()
+UBGNumberManager* UBGNumberManager::Get()
 {
 	if (!SingletonInstance)
 	{
-		SingletonInstance = NewObject<UNumberManager>();
+		SingletonInstance = NewObject<UBGNumberManager>();
 		SingletonInstance->AddToRoot();
 	}
 	return SingletonInstance;
 }
 
-void UNumberManager::SpawnNumber(UObject* WorldContextObject, FString Number, FVector Location)
+void UBGNumberManager::SpawnNumber(UObject* WorldContextObject, FString Number, FVector Location)
 {
 	if (!NumberActorClass)
 	{
@@ -49,7 +49,7 @@ void UNumberManager::SpawnNumber(UObject* WorldContextObject, FString Number, FV
 	{			
 		if (!NumberActorClass) return;
 		
-		ANumber* SpawnedNumber = World->SpawnActor<ANumber>(NumberActorClass, SpawnLocation, FRotator(-90, 0, 0));
+		ABGNumber* SpawnedNumber = World->SpawnActor<ABGNumber>(NumberActorClass, SpawnLocation, FRotator(-90, 0, 0));
 		if (SpawnedNumber)
 		{
 			SpawnedNumber->SetNumber(Character);

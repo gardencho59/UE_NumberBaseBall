@@ -1,7 +1,7 @@
-#include "Number.h"
+#include "BGNumber.h"
 #include "Components/BillboardComponent.h"
 
-ANumber::ANumber()
+ABGNumber::ABGNumber()
 {
 	PrimaryActorTick.bCanEverTick = false;
 	
@@ -12,12 +12,12 @@ ANumber::ANumber()
 	StaticMesh->SetupAttachment(Root);
 }
 
-void ANumber::BeginPlay()
+void ABGNumber::BeginPlay()
 {
 	Super::BeginPlay();
 }
 
-void ANumber::SetNumber(TCHAR Character)
+void ABGNumber::SetNumber(TCHAR Character)
 {
 	int32 Index = -1;
 
@@ -34,7 +34,7 @@ void ANumber::SetNumber(TCHAR Character)
 	}
 }
 
-void ANumber::Tick(float DeltaTime)
+void ABGNumber::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 }

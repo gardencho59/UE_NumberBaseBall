@@ -2,27 +2,27 @@
 
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
-#include "NumberManager.generated.h"
+#include "BGNumberManager.generated.h"
 
 UCLASS()
-class NUMBERBASEBALL_API UNumberManager : public UObject
+class NUMBERBASEBALL_API UBGNumberManager : public UObject
 {
 	GENERATED_BODY()
 
 public:
-	UNumberManager();
+	UBGNumberManager();
 	
 	UFUNCTION(BlueprintCallable, Category = "NumberManager")
-	static UNumberManager* Get();
+	static UBGNumberManager* Get();
 
 	UFUNCTION(BlueprintCallable, Category = "NumberManager", meta = (WorldContext = "WorldContextObject"))
 	void SpawnNumber(UObject* WorldContextObject, FString Number, FVector Location);
 
 private:
-	static UNumberManager* SingletonInstance;
+	static UBGNumberManager* SingletonInstance;
 	
 public:
 	UPROPERTY(EditDefaultsOnly, Category = "NumberManager")
-	TSubclassOf<class ANumber> NumberActorClass;
+	TSubclassOf<class ABGNumber> NumberActorClass;
 
 };

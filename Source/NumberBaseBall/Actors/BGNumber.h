@@ -2,15 +2,15 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Number.generated.h"
+#include "BGNumber.generated.h"
 
 UCLASS()
-class NUMBERBASEBALL_API ANumber : public AActor
+class NUMBERBASEBALL_API ABGNumber : public AActor
 {
 	GENERATED_BODY()
 
 public:
-	ANumber();
+	ABGNumber();
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Scene Root")
 	USceneComponent* Root;
