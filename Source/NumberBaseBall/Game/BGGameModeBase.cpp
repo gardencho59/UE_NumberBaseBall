@@ -156,12 +156,20 @@ void ABGGameModeBase::PrintChatMessageString(ABGPlayerController* InChattingPlay
 	}
 	else
 	{
+		FString PlayerInfoString = TEXT("");
+		ABGPlayerState* BGPS = InChattingPlayerController->GetPlayerState<ABGPlayerState>();
+		if (IsValid(BGPS) == true)
+		{
+			PlayerInfoString = BGPS->GetPlayerInfoString();
+		}
+		
 		for (TActorIterator<ABGPlayerController> It(GetWorld()); It; ++It)
 		{
 			ABGPlayerController* BGPC = *It;
 			if (IsValid(BGPC) == true)
 			{
-				BGPC->ClientRPCPrintChatMessageString(InChatMessageString);
+				FString CombinedMessageString = PlayerInfoString + TEXT(": ") + InChatMessageString;
+				BGPC->ClientRPCPrintChatMessageString(CombinedMessageString);
 			}
 		}
 	}
