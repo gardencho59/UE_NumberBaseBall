@@ -34,11 +34,11 @@ public:
 	virtual void GetLifetimeReplicatedProps(TArray<class FLifetimeProperty>& OutLifetimeProps) const override;
 	
 protected:
-	//UPROPERTY(EditDefaultsOnly)
-	//TSubclassOf<UBGChatInput> ChatInputWidgetClass;
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<UBGChatInput> ChatInputWidgetClass;
 	
-	//UPROPERTY()
-	//TObjectPtr<UBGChatInputChatInput> ChatInputWidgetInstance;	
+	UPROPERTY()
+	TObjectPtr<UBGChatInput> ChatInputWidgetInstance;	
 
 	FString ChatMessageString;
 

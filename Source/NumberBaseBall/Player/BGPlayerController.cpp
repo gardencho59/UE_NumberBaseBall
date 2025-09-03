@@ -3,7 +3,7 @@
 
 #include "Player/BGPlayerController.h"
 
-//#include "UI/BGChatInput.h"
+#include "UI/BGChatInput.h"
 #include "EngineUtils.h"
 #include "Kismet/GameplayStatics.h"
 #include "Game/BGGameModeBase.h"
@@ -25,7 +25,7 @@ void ABGPlayerController::BeginPlay()
 	
 	FInputModeUIOnly InputModeUIOnly;
 	SetInputMode(InputModeUIOnly);
-	/*
+	
 	if (IsValid(ChatInputWidgetClass) == true)
 	{
 		ChatInputWidgetInstance = CreateWidget<UBGChatInput>(this, ChatInputWidgetClass);
@@ -42,7 +42,7 @@ void ABGPlayerController::BeginPlay()
 			NotificationTextWidgetInstance->AddToViewport();
 		}
 	}
-	*/
+	
 }
 
 
@@ -58,7 +58,7 @@ void ABGPlayerController::SetChatMessageString(const FString& InChatMessageStrin
 			// {
 			// 	FString CombinedMessageString = BGPS->GetPlayerInfoString() + TEXT(": ") + InChatMessageString;
 			//
-			// 	ServerRPCPrintChatMessageString(CombinedMessageString);
+			//	ServerRPCPrintChatMessageString(CombinedMessageString);
 			// }
 			ServerRPCPrintChatMessageString(ChatMessageString);
 		}
