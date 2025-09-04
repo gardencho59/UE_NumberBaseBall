@@ -19,7 +19,17 @@ public:
 	virtual void GetLifetimeReplicatedProps(TArray<class FLifetimeProperty>& OutLifetimeProps) const override;
 
 	FString GetPlayerInfoString();
+
+	virtual void BeginPlay() override;
+
+	void UpdateTurnTimer();
+
+	void StartTurnTime();
 	
+	void OnTurnTimeout();
+
+	void ClearTurnTimerHandle();
+
 public:
 	UPROPERTY(Replicated)
 	FString PlayerNameString;
@@ -29,4 +39,12 @@ public:
 
 	UPROPERTY(Replicated)
 	int32 MaxGuessCount;
+
+	UPROPERTY()
+	float TurnTime;
+
+private:
+	FTimerHandle TurnTimerHandle;
+
+	FTimerHandle UpdateTimerHandle;
 };

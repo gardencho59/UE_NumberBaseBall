@@ -28,8 +28,14 @@ public:
 	UFUNCTION(Client, Reliable)
 	void ClientRPCPrintChatMessageString(const FString& InChatMessageString);
 
+	UFUNCTION(Client, Reliable)
+	void ClientRPCUpdateRemainingTime(float RemainingTime);
+
 	UFUNCTION(Server, Reliable)
 	void ServerRPCPrintChatMessageString(const FString& InChatMessageString);
+
+	UFUNCTION(Server, Reliable)
+	void ServerRPCClearTurnTimerHandle();
 
 	virtual void GetLifetimeReplicatedProps(TArray<class FLifetimeProperty>& OutLifetimeProps) const override;
 	
@@ -51,5 +57,7 @@ protected:
 public:
 	UPROPERTY(Replicated, BlueprintReadOnly)
 	FText NotificationText;
-	
+
+	UPROPERTY(Replicated, BlueprintReadOnly)
+	FText RemainingTimeText;
 };

@@ -3,7 +3,7 @@
 #include "Player/BGPlayerController.h"
 #include "Player/BGPlayerState.h"
 #include "EngineUtils.h"
-#include "Actors/BGNumberManager.h"
+
 
 void ABGGameModeBase::BeginPlay()
 {
@@ -21,7 +21,7 @@ void ABGGameModeBase::OnPostLogin(AController* NewPlayer)
 	{
 		BGPC->NotificationText = FText::FromString(TEXT("Baseball Game"));
 		AllPlayerControllers.Add(BGPC);
-	
+		
 		ABGPlayerState* BGPS = BGPC->GetPlayerState<ABGPlayerState>();
 		if (IsValid(BGPS) == true)
 		{
@@ -114,23 +114,11 @@ FString ABGGameModeBase::JudgeResult(const FString& InSecretNumberString, const 
 		}
 	}
 
-	UBGNumberManager* NumberManager = UBGNumberManager::Get();
-	if (NumberManager)
-	{
-		// 액터 삭제
-		NumberManager->DestroySpawnedNumbers();
-		// 숫자 액터 생성
-		NumberManager->SpawnNumber(GetWorld(), InGuessNumberString, FVector(0.f, 300.f, 200.f));
-		// 판정 결과 액터 생성
-		FString NumberText = FString::Printf(TEXT("%dS%dB"), StrikeCount, BallCount);
-		NumberManager->SpawnNumber(GetWorld(), NumberText, FVector(0.f, 0.f, 200.f));
-	}
-	
 	if (StrikeCount == 0 && BallCount == 0)
 	{
 		return TEXT("OUT");
 	}
-	
+
 	return FString::Printf(TEXT("%dS %dB"),StrikeCount, BallCount);
 }
 
@@ -144,6 +132,7 @@ void ABGGameModeBase::PrintChatMessageString(ABGPlayerController* InChattingPlay
 	{
 		FString JudgeResultString = JudgeResult(SecretNumberString, GuessNumberString);
 		IncreaseGuessCount(InChattingPlayerController);
+		InChattingPlayerController->ServerRPCClearTurnTimerHandle();
 
 		FString PlayerInfoString = TEXT("");
 		ABGPlayerState* BGPS = InChattingPlayerController->GetPlayerState<ABGPlayerState>();

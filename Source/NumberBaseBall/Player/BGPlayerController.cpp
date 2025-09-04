@@ -8,9 +8,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Game/BGGameModeBase.h"
 #include "BGPlayerState.h"
-#include "BGPlayerState.h"
 #include "Net/UnrealNetwork.h"
-#include "BGPlayerState.h"
 
 
 ABGPlayerController::ABGPlayerController()
@@ -67,6 +65,11 @@ void ABGPlayerController::PrintChatMessageString(const FString& InChatMessageStr
 	UKismetSystemLibrary::PrintString(this, InChatMessageString, true, true, FLinearColor::Red, 5.0f);
 }
 
+void ABGPlayerController::ClientRPCUpdateRemainingTime_Implementation(float RemainingTime)
+{
+	RemainingTimeText = FText::FromString(FString::Printf(TEXT("Time: %.1f"),RemainingTime));
+}
+
 
 void ABGPlayerController::ClientRPCPrintChatMessageString_Implementation(const FString& InChatMessageString)
 {
@@ -76,22 +79,33 @@ void ABGPlayerController::ClientRPCPrintChatMessageString_Implementation(const F
 
 void ABGPlayerController::ServerRPCPrintChatMessageString_Implementation(const FString& InChatMessageString)
 {
-AGameModeBase* GM = UGameplayStatics::GetGameMode(this);
-	if (IsValid(GM) == true)
-	{
-		ABGGameModeBase* BGGM = Cast<ABGGameModeBase>(GM);
-		if (IsValid(BGGM) == true)
+	AGameModeBase* GM = UGameplayStatics::GetGameMode(this);
+		if (IsValid(GM) == true)
 		{
-			BGGM->PrintChatMessageString(this, InChatMessageString);
+			ABGGameModeBase* BGGM = Cast<ABGGameModeBase>(GM);
+			if (IsValid(BGGM) == true)
+			{
+				BGGM->PrintChatMessageString(this, InChatMessageString);
+			}
 		}
-	}
 }
 
+
+void ABGPlayerController::ServerRPCClearTurnTimerHandle_Implementation()
+{
+	ABGPlayerState* BGPS = GetPlayerState<ABGPlayerState>();
+	if (BGPS)
+	{
+		BGPS->ClearTurnTimerHandle();
+		BGPS->StartTurnTime();
+	}
+}
 
 void ABGPlayerController::GetLifetimeReplicatedProps(TArray<class FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(ThisClass, NotificationText);
+	DOREPLIFETIME(ThisClass, RemainingTimeText);
 }
 
