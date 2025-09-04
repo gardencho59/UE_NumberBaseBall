@@ -28,4 +28,7 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, Category="Number")
 	TArray<UStaticMesh*> NumberMeshes;
+
+	UFUNCTION(NetMulticast, Reliable)
+	void MulticastSetNumber(int32 Index);
 };

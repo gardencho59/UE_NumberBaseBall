@@ -10,11 +10,19 @@ ABGNumber::ABGNumber()
 	
 	StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh"));
 	StaticMesh->SetupAttachment(Root);
+
+	bReplicates = true;
+	Root->SetIsReplicated(true);
 }
 
 void ABGNumber::BeginPlay()
 {
 	Super::BeginPlay();
+}
+
+void ABGNumber::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
 }
 
 void ABGNumber::SetNumber(TCHAR Character)
@@ -27,14 +35,18 @@ void ABGNumber::SetNumber(TCHAR Character)
 		Index = 10;
 	else if (Character == 'B')
 		Index = 11;
-	
+
+	if (HasAuthority())
+	{
+		MulticastSetNumber(Index);
+	}
+}
+
+void ABGNumber::MulticastSetNumber_Implementation(int32 Index)
+{
+
 	if (NumberMeshes.IsValidIndex(Index))
 	{
 		StaticMesh->SetStaticMesh(NumberMeshes[Index]);
 	}
-}
-
-void ABGNumber::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
 }

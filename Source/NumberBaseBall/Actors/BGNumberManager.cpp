@@ -5,11 +5,6 @@ UBGNumberManager* UBGNumberManager::SingletonInstance = nullptr;
 
 UBGNumberManager::UBGNumberManager()
 {
-	static ConstructorHelpers::FClassFinder<ABGNumber> NumberBPClass(TEXT("/Game/Actors/BP_Number"));
-	if (NumberBPClass.Succeeded())
-	{
-		NumberActorClass = NumberBPClass.Class;
-	}
 }
 
 UBGNumberManager* UBGNumberManager::Get()
@@ -24,11 +19,17 @@ UBGNumberManager* UBGNumberManager::Get()
 
 void UBGNumberManager::SpawnNumber(UObject* WorldContextObject, FString Number, FVector Location)
 {
+
 	if (!NumberActorClass)
 	{
-		UE_LOG(LogTemp, Log, TEXT("!NumberActorClass"))
-		return;
+		NumberActorClass = LoadClass<ABGNumber>(nullptr, TEXT("/Game/Actors/BP_Numbers.BP_Numbers_C"));
+		if (!NumberActorClass)
+		{
+			UE_LOG(LogTemp, Error, TEXT("Failed to load NumberActorClass!"));
+			return;
+		}
 	}
+
 
 	if (!WorldContextObject)
 	{
@@ -44,17 +45,40 @@ void UBGNumberManager::SpawnNumber(UObject* WorldContextObject, FString Number, 
 	}
 	
 	FVector SpawnLocation = Location;
-	float OffsetX = 50.f;    
+	float OffsetY = 50.f;    
 	for (TCHAR Character : Number)
 	{			
 		if (!NumberActorClass) return;
 		
-		ABGNumber* SpawnedNumber = World->SpawnActor<ABGNumber>(NumberActorClass, SpawnLocation, FRotator(-90, 0, 0));
+		UE_LOG(LogTemp, Log, TEXT("Spawn Number"))
+
+		FActorSpawnParameters SpawnParams;
+		SpawnParams.Owner = nullptr;
+		SpawnParams.Instigator = nullptr;
+		SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+		
+		ABGNumber* SpawnedNumber = World->SpawnActor<ABGNumber>(NumberActorClass, SpawnLocation, FRotator(-90, 0, 0), SpawnParams);
 		if (SpawnedNumber)
 		{
 			SpawnedNumber->SetNumber(Character);
+			SpawnedNumbers.Add(SpawnedNumber);
 		}	
-		SpawnLocation.Y -= OffsetX;
+		SpawnLocation.Y -= OffsetY;
 	}
 
+}
+
+void UBGNumberManager::DestroySpawnedNumbers()
+{
+	if (SpawnedNumbers.Num() > 0)
+	{
+		for (ABGNumber* NumActor : SpawnedNumbers)
+		{
+			if (IsValid(NumActor))
+			{
+				NumActor->Destroy();
+			}
+		}
+		SpawnedNumbers.Empty();
+	}
 }
