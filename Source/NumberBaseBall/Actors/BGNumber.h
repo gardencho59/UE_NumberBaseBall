@@ -18,17 +18,23 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "StaticMeh Component")
 	UStaticMeshComponent* StaticMesh;
 
-protected:
-	virtual void BeginPlay() override;
-
-public:
-	virtual void Tick(float DeltaTime) override;
-
-	void SetNumber(TCHAR Character);
-
 	UPROPERTY(EditDefaultsOnly, Category="Number")
 	TArray<UStaticMesh*> NumberMeshes;
+	
+protected:
+	virtual void BeginPlay() override;
+	
+	virtual void Tick(float DeltaTime) override;
 
+public:
+	
 	UFUNCTION(NetMulticast, Reliable)
 	void MulticastSetNumber(int32 Index);
+	void SetNumber(TCHAR Character);
+	
+	FVector TargetLocation;
+	
+private:
+	bool bDestroying = false;
+
 };

@@ -28,7 +28,7 @@ void ABGPlayerController::BeginPlay()
 		return;
 	}
 	
-	FInputModeUIOnly InputModeUIOnly;
+	FInputModeGameAndUI InputModeUIOnly;
 	SetInputMode(InputModeUIOnly);
 	
 	if (IsValid(ChatInputWidgetClass) == true)

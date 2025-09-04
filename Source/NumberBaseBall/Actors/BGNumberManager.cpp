@@ -76,7 +76,10 @@ void UBGNumberManager::DestroySpawnedNumbers()
 		{
 			if (IsValid(NumActor))
 			{
-				NumActor->Destroy();
+				if (NumActor->HasAuthority())
+				{
+					NumActor->Destroy();
+				}
 			}
 		}
 		SpawnedNumbers.Empty();
