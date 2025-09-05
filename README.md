@@ -42,5 +42,5 @@
 ## 기술 스택
 - **엔진**: Unreal Engine 5
 - **언어**: C++, Blueprint
-- **네트워크**: RPC(Server, Multicast), PlayerState, RepNotify
+- **네트워크**: RPC(Server, Multicast), PlayerState
 - **버전 관리**: Git / GitHub
